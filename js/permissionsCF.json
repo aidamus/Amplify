@@ -1,0 +1,43 @@
+{
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "IAM Permissions for Amplify AIDMAL test Lambda",
+	"Resources": {
+		"executionRoleLnaKeysLambda": {
+			"Type": "AWS::IAM::Role",
+			"Properties": {
+				"RoleName": "executionRole-amplify-aidmal-lambda",
+				"AssumeRolePolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Principal": {
+								"Service": ["lambda.amazonaws.com"]
+							},
+							"Action": ["sts:AssumeRole"]
+						}
+					]
+				},
+				"Path": "/ams/lambda/",
+				"ManagedPolicyArns": [
+					"arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+				],
+				"Policies": [
+					{
+						"PolicyName": "ams-aidmal-amplify",
+						"PolicyDocument": {
+							"Version": "2012-10-17",
+							"Statement": [
+								{
+									"Effect": "Allow",
+									"Action": "dynamodb:PutItem",
+									"Resource": "arn:aws:dynamodb:us-west-2:359158632008:table/AmplifyAidmal"
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	}
+}
